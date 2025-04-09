@@ -8,6 +8,7 @@ public class DemoAiApplication {
 
     public static void main(String[] args) {
         SpringApplication.run(DemoAiApplication.class, args);
+        System.out.println("启动成功");
     }
 
 }

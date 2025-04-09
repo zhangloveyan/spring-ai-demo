@@ -14,17 +14,21 @@ public class ChatController {
     @Resource
     ChatClient chatClient;
 
-//    @RequestMapping("/chat")
-//    public String chat(String prompt) {
-//        return chatClient.prompt().user(prompt).call().content();
-//    }
+    @RequestMapping("/chat/call")
+    public String chat(@RequestParam String prompt) {
+        return chatClient
+                .prompt()
+                .user(prompt)
+                .call()
+                .content();
+    }
 
     @RequestMapping(value = "/chat", produces = "text/html;charset=utf-8")
-    public Flux<String> chat(String prompt, @RequestParam String chatId) {
+    public Flux<String> chat(@RequestParam String prompt, @RequestParam String chatId) {
         return chatClient
                 .prompt()
                 .advisors(advisorSpec -> advisorSpec.param(
-                        AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY,chatId
+                        AbstractChatMemoryAdvisor.CHAT_MEMORY_CONVERSATION_ID_KEY, chatId
                 ))
                 .user(prompt)
                 .stream()
