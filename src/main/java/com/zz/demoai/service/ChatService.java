@@ -3,6 +3,8 @@ package com.zz.demoai.service;
 import com.zz.demoai.bean.Chat;
 import com.baomidou.mybatisplus.extension.service.IService;
 
+import java.util.List;
+
 /**
 * @author zln
 * @description 针对表【chat】的数据库操作Service
@@ -10,4 +12,5 @@ import com.baomidou.mybatisplus.extension.service.IService;
 */
 public interface ChatService extends IService<Chat> {
 
+    List<Chat> listByUserId(Long userId);
 }
