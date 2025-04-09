@@ -11,10 +11,10 @@ import org.springframework.context.annotation.Configuration;
 
 @Configuration
 public class CommonConfig {
-    @Bean
-    public ChatMemory chatMemory() {
-        return new InMemoryChatMemory();
-    }
+//    @Bean
+//    public ChatMemory chatMemory() {
+//        return new InMemoryChatMemory();
+//    }
 
     @Bean
     public ChatClient chatClient(OllamaChatModel model, ChatMemory chatMemory) {

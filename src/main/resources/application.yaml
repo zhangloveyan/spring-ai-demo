@@ -1,6 +1,10 @@
 spring:
   application:
     name: demo-ai
+  datasource:
+    url: jdbc:mysql://localhost:3306/demo?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&allowMultiQueries=true
+    username: root
+    password: root
   ai:
     ollama:
       base-url: http://localhost:11434
