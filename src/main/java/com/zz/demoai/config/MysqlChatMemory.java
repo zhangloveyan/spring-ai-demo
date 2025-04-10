@@ -1,6 +1,7 @@
 package com.zz.demoai.config;
 
 import com.alibaba.fastjson2.JSONObject;
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.zz.demoai.bean.ChatDetail;
 import com.zz.demoai.service.ChatDetailService;
 import jakarta.annotation.Resource;
@@ -54,7 +55,7 @@ public class MysqlChatMemory implements ChatMemory {
             if ("user".equals(role)) {
                 UserMessage userMessage = new UserMessage(jsonObject.getString("text"));
                 messageList.add(userMessage);
-            } else if ("assistant".equals(role)){
+            } else if ("assistant".equals(role)) {
                 AssistantMessage assistantMessage = new AssistantMessage(jsonObject.getString("text"));
                 messageList.add(assistantMessage);
             }
@@ -64,6 +65,8 @@ public class MysqlChatMemory implements ChatMemory {
 
     @Override
     public void clear(String conversationId) {
-
+        LambdaQueryWrapper<ChatDetail> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper.eq(ChatDetail::getChatId, conversationId);
+        chatDetailService.remove(queryWrapper);
     }
 }
