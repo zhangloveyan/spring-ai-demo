@@ -13,4 +13,6 @@ import java.util.List;
 public interface ChatService extends IService<Chat> {
 
     List<Chat> listByUserId(Long userId);
+
+    Chat create(Long userId);
 }

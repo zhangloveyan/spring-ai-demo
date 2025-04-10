@@ -21,6 +21,16 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat>
     public List<Chat> listByUserId(Long userId) {
         return lambdaQuery().eq(Chat::getUserId, userId).list();
     }
+
+
+    @Override
+    public Chat create(Long userId) {
+        Chat chat = new Chat();
+        chat.setUserId(userId);
+        chat.setTitle("测试标题" + System.currentTimeMillis());
+        save(chat);
+        return chat;
+    }
 }
 
 
