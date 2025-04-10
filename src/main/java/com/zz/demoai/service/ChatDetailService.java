@@ -12,5 +12,5 @@ import java.util.List;
 */
 public interface ChatDetailService extends IService<ChatDetail> {
 
-    List<ChatDetail> detailList(Long userId, Long id);
+    List<ChatDetail> detailList(Long userId, Long chatId);
 }

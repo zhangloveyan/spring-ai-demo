@@ -7,7 +7,6 @@ import com.zz.demoai.service.ChatDetailService;
 import com.zz.demoai.service.ChatService;
 import jakarta.annotation.Resource;
 import org.springframework.ai.chat.client.ChatClient;
-import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 
@@ -26,6 +25,11 @@ public class ChatController {
     @Resource
     ChatDetailService chatDetailService;
 
+    /**
+     * 等有结果再返回 非流式
+     * @param prompt
+     * @return
+     */
     @RequestMapping("/chat/call")
     public String chat(@RequestParam String prompt) {
         return chatClient
@@ -52,12 +56,13 @@ public class ChatController {
      * 对话详情
      *
      * @param userId
-     * @param id
+     * @param chatId
      * @return
      */
     @GetMapping("/chat/detail/{id}")
-    public R<List<ChatDetail>> detailList(@RequestParam("userId") Long userId, @PathVariable("id") Long id) {
-        List<ChatDetail> list = chatDetailService.detailList(userId, id);
+    public R<List<ChatDetail>> detailList(@RequestParam("userId") Long userId, @PathVariable("chatId") Long chatId) {
+        chatService.checkUserAndChat(userId,chatId);
+        List<ChatDetail> list = chatDetailService.detailList(userId, chatId);
         return R.ok(list);
     }
 
@@ -80,11 +85,12 @@ public class ChatController {
      * @param chatId
      * @return
      */
-    @RequestMapping(value = "/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+//    @RequestMapping(value = "/chat", produces = MediaType.TEXT_EVENT_STREAM_VALUE)
+    @RequestMapping(value = "/chat", produces = "text/html;charset=utf-8")
     public Flux<String> chat(@RequestParam("userId") Long userId,
-                             @RequestParam String chatId,
+                             @RequestParam Long chatId,
                              @RequestParam String prompt) {
-//        checkUser(userId, chatId);
+        chatService.checkUserAndChat(userId,chatId);
         return chatClient
                 .prompt()
                 .advisors(advisorSpec -> advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)

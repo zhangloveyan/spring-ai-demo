@@ -31,6 +31,11 @@ public class ChatServiceImpl extends ServiceImpl<ChatMapper, Chat>
         save(chat);
         return chat;
     }
+
+    @Override
+    public void checkUserAndChat(Long userId, Long chatId) {
+        // 判断该问题是否是用户所有
+    }
 }
 
 
