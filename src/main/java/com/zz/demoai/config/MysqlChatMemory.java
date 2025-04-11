@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 @Slf4j
-@Component
+//@Component
 public class MysqlChatMemory implements ChatMemory {
     @Resource
     ChatDetailService chatDetailService;

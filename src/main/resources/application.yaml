@@ -2,6 +2,7 @@ spring:
   application:
     name: demo-ai
   datasource:
+    driver-class-name: com.mysql.cj.jdbc.Driver
     url: jdbc:mysql://localhost:3306/demo?useSSL=false&allowPublicKeyRetrieval=true&characterEncoding=UTF-8&allowMultiQueries=true
     username: root
     password: root
@@ -11,6 +12,19 @@ spring:
       chat:
         model: deepseek-r1:1.5b
 #        model: deepseek-r1:7b
+    openai:
+      base-url: https://api.deepseek.com
+      api-key: ${OPENAI_API_KEY}
+#     聊天模型
+      chat:
+        options:
+          model: deepseek-chat
+#      向量模型
+#      embedding:
+#        options:
+#          model:
+#          dimensions:
+
 logging:
   level:
     org.springframework.ai.chat.client.advisor: debug

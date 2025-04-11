@@ -100,4 +100,20 @@ public class ChatController {
                 .content();
     }
 
+    @Resource
+    ChatClient deepSeekChatClient;
+
+    @RequestMapping(value = "/chat-dp", produces = "text/html;charset=utf-8")
+    public Flux<String> deepSeekChat(@RequestParam("userId") Long userId,
+                             @RequestParam Long chatId,
+                             @RequestParam String prompt) {
+        chatService.checkUserAndChat(userId,chatId);
+        return deepSeekChatClient
+                .prompt()
+                .advisors(advisorSpec -> advisorSpec.param(CHAT_MEMORY_CONVERSATION_ID_KEY, chatId)
+                        .param(CHAT_MEMORY_RETRIEVE_SIZE_KEY, 10))
+                .user(prompt)
+                .stream()
+                .content();
+    }
 }
