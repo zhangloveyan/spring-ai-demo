@@ -26,19 +26,16 @@ public class ChatController {
     ChatDetailService chatDetailService;
 
     /**
-     * 等有结果再返回 非流式
-     * @param prompt
+     * 对话创建
+     *
+     * @param userId
      * @return
      */
-    @RequestMapping("/chat/call")
-    public String chat(@RequestParam String prompt) {
-        return chatClient
-                .prompt()
-                .user(prompt)
-                .call()
-                .content();
+    @PostMapping("/chat")
+    public R<Chat> create(@RequestParam("userId") Long userId) {
+        Chat chat = chatService.create(userId);
+        return R.ok(chat);
     }
-
 
     /**
      * 对话列表
@@ -53,7 +50,7 @@ public class ChatController {
     }
 
     /**
-     * 对话详情
+     * 对话记录
      *
      * @param userId
      * @param chatId
@@ -67,19 +64,21 @@ public class ChatController {
     }
 
     /**
-     * 对话创建
-     *
-     * @param userId
+     * 非流式对话 等有结果再返回
+     * @param prompt
      * @return
      */
-    @PostMapping("/chat")
-    public R<Chat> create(@RequestParam("userId") Long userId) {
-        Chat chat = chatService.create(userId);
-        return R.ok(chat);
+    @RequestMapping("/chat/call")
+    public String chat(@RequestParam String prompt) {
+        return chatClient
+                .prompt()
+                .user(prompt)
+                .call()
+                .content();
     }
 
     /**
-     * 开始对话
+     * 流式对话
      *
      * @param prompt
      * @param chatId
