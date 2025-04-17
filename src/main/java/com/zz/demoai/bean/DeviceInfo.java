@@ -31,7 +31,7 @@ public class DeviceInfo implements Serializable {
     private String deviceName;
 
     /**
-     * 开关 0 关 1 开
+     * 推送开关 0 关 1 开
      */
     private Integer pushStatus;
 

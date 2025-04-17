@@ -1,5 +1,6 @@
 package com.zz.demoai.config;
 
+import com.zz.demoai.tools.DeviceTools;
 import org.springframework.ai.chat.client.ChatClient;
 import org.springframework.ai.chat.client.advisor.MessageChatMemoryAdvisor;
 import org.springframework.ai.chat.client.advisor.SimpleLoggerAdvisor;
@@ -27,11 +28,13 @@ public class CommonConfig {
     }
 
     @Bean
-    public ChatClient deepSeekChatClient(OpenAiChatModel model, ChatMemory chatMemory) {
+    public ChatClient deepSeekChatClient(OpenAiChatModel model, ChatMemory chatMemory, DeviceTools deviceTools) {
         return ChatClient.builder(model)
+                .defaultSystem(Prompt.AI_DEVICE_PROMPT)
                 .defaultAdvisors(
                         new SimpleLoggerAdvisor(),
                         new MessageChatMemoryAdvisor(chatMemory))
+                .defaultTools(deviceTools)
                 .build();
     }
 }

@@ -18,7 +18,7 @@ public class ServiceOrder implements Serializable {
     /**
      * 
      */
-    @TableId
+    @TableId(type = IdType.AUTO)
     private Integer id;
 
     /**
@@ -34,7 +34,7 @@ public class ServiceOrder implements Serializable {
     /**
      * 问题描述
      */
-    private String desc;
+    private String description;
 
     /**
      * 是否解决 0 未解决 1 已解决

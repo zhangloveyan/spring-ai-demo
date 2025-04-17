@@ -8,11 +8,11 @@
             <id property="id" column="id" />
             <result property="createDate" column="create_date" />
             <result property="title" column="title" />
-            <result property="desc" column="desc" />
+            <result property="description" column="description" />
             <result property="solve" column="solve" />
     </resultMap>
 
     <sql id="Base_Column_List">
-        id,create_date,title,desc,solve
+        id,create_date,title,description,solve
     </sql>
 </mapper>
